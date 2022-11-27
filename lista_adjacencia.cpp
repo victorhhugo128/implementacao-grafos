@@ -14,11 +14,10 @@ ListaAdjacencia::~ListaAdjacencia(){
 
     while(ptr){
         ptr2 = ptr;
-        ptr = ptr->prox_celula;
+        if(ptr->prox_celula)
+            ptr = ptr->prox_celula;
         delete ptr2;
     }
-
-
 }
 
 void ListaAdjacencia::adicionarAdjacencia(char v, int peso){ // adiciona nova adjacência ao final da lista encadeada
