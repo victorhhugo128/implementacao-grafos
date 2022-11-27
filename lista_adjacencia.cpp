@@ -10,6 +10,14 @@ ListaAdjacencia::ListaAdjacencia(char chave){ // primeiro elemento da lista semp
 }
 
 ListaAdjacencia::~ListaAdjacencia(){
+    Celula *ptr = this->lista_adjacencia, *ptr2 = NULL;
+
+    while(ptr){
+        ptr2 = ptr;
+        ptr = ptr->prox_celula;
+        delete ptr2;
+    }
+
 
 }
 
