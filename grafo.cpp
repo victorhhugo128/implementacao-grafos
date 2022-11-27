@@ -17,6 +17,10 @@ Grafo::Grafo(int n_vertices, bool direcionado)
     }
 }
 
+Grafo::~Grafo(){
+
+}
+
 void Grafo::inserirAresta(const char &v1, const char &v2, int peso){
     int coordenadas[2] = {-1, -1};
 

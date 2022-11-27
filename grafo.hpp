@@ -12,6 +12,7 @@ class Grafo
 {   
 public:
     Grafo(int = 5, bool = false); // cria grafo vazio
+    ~Grafo();
     void inserirAresta(const char &, const char &, int = 1);
     void mostrarMatriz();
 private:
