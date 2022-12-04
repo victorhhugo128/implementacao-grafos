@@ -13,6 +13,10 @@ class Grafo
 public:
     Grafo(int = 5, bool = false); // cria grafo vazio
     ~Grafo();
+    struct Aresta{
+        char v1, v2;
+        int peso;
+    };
     void inserirAresta(const char &, const char &, int = 1);
     void mostrarMatriz();
 private:
