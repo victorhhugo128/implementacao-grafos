@@ -36,8 +36,8 @@ public:
 
 private:
     int* retornaCoordenadas(const char &v1, const char &v2) const; // retorna as coordenadas correspondentes aos vértices dados como entrada
-    vector<char> vertices; // mapeia o rotulo do vertice ao numero atribuido a ele na matriz adjacencia
-    vector<vector<int>> matriz_adjacencia;
+    char *vertices; // mapeia o rotulo do vertice ao numero atribuido a ele na matriz adjacencia
+    int **matriz_adjacencia;
     const int N_VERTICES;
     const bool DIRECIONADO;
 };

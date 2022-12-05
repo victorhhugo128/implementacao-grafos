@@ -5,15 +5,16 @@ using std::cout;
 
 Grafo::Grafo(int n_vertices, bool direcionado)
 :N_VERTICES(n_vertices), DIRECIONADO(direcionado){
-    for(int i = 65; i < 65 + n_vertices; i++){
-        this->vertices.push_back(i);
+    this->vertices = new char[N_VERTICES];
+    for(int letra = 65; letra < 65 + N_VERTICES; letra++){
+        this->vertices[letra - 65] = letra;
     }
-    for(int i = 0; i < n_vertices; i++){
-        vector<int> temp_vector;
-        for(int j = 0; j < n_vertices; j++){
-            temp_vector.push_back(0);
+    this->matriz_adjacencia = new int *[N_VERTICES];
+    for(int i = 0; i < N_VERTICES; i++){
+        this->matriz_adjacencia[i] = new int[N_VERTICES];
+        for(int j = 0; j < N_VERTICES; j++){
+            this->matriz_adjacencia[i][j] = 0;
         }
-        this->matriz_adjacencia.push_back(temp_vector);
     }
 }
 
@@ -134,14 +135,14 @@ vector<Aresta*> Grafo::obterAdjacencias(const char &v) const{
 
 void Grafo::mostrarMatriz() const{
     cout << "\t";
-    for(int vertice = 0; vertice < this->vertices.size(); vertice++){
+    for(int vertice = 0; vertice < N_VERTICES; vertice++){
         cout << this->vertices[vertice] << "\t";
     }
     cout << "\n";
 
-    for(int linha = 0; linha < this->vertices.size(); linha++){
+    for(int linha = 0; linha < N_VERTICES; linha++){
         cout << this->vertices[linha];
-        for(int coluna = 0; coluna < this->vertices.size(); coluna++){
+        for(int coluna = 0; coluna < N_VERTICES; coluna++){
             cout << "\t" << this->matriz_adjacencia[linha][coluna];
         }
         cout << "\n";
@@ -157,8 +158,8 @@ int Grafo::retornarNVertices() const{
 int Grafo::retornarNArestas() const{
     int n_arestas = 0;
 
-    for(int linha = 0; linha < this->vertices.size(); linha++){
-        for(int coluna = 0; coluna < this->vertices.size(); coluna++){
+    for(int linha = 0; linha < N_VERTICES; linha++){
+        for(int coluna = 0; coluna < N_VERTICES; coluna++){
             if(this->matriz_adjacencia[linha][coluna] > 0){
                 n_arestas++;
             }
