@@ -9,12 +9,18 @@ Grafo::Grafo(int n_vertices, bool direcionado)
     for(int letra = 65; letra < 65 + N_VERTICES; letra++){
         this->vertices[letra - 65] = letra;
     }
+
     this->matriz_adjacencia = new int *[N_VERTICES];
-    for(int i = 0; i < N_VERTICES; i++){
-        this->matriz_adjacencia[i] = new int[N_VERTICES];
-        for(int j = 0; j < N_VERTICES; j++){
-            this->matriz_adjacencia[i][j] = 0;
+    for(int linha = 0; linha < N_VERTICES; linha++){
+        this->matriz_adjacencia[linha] = new int[N_VERTICES];
+        for(int coluna = 0; coluna < N_VERTICES; coluna++){
+            this->matriz_adjacencia[linha][coluna] = 0;
         }
+    }
+
+    this->pos = new int[N_VERTICES];
+    for(int vertice = 0; vertice < N_VERTICES; vertice++){
+        this->pos[vertice] = -1;
     }
 }
 
@@ -47,7 +53,7 @@ int* Grafo::retornaGrauVerticeNDirecionado(const char &v) const{
         }
     }
 
-    return &grau;
+    return new int(grau);
 }
 
 int* Grafo::retornaGrauVerticeDirecionado(const char &v) const{
@@ -215,4 +221,46 @@ int* Grafo::retornaGrauVertice(const char &v) const{
         grau = this->retornaGrauVerticeNDirecionado(v);
     }
     return grau;
+}
+
+bool Grafo::listaAdjVazia(const char &v) const{
+    int linha = v - 65;
+
+    for(int coluna = 0; coluna < N_VERTICES; coluna++){
+        if(this->matriz_adjacencia[linha][coluna] > 0){
+            return false;
+        }
+    }
+
+    return true;
+}
+
+Aresta* Grafo::primeiroListaAdj(const char &v) const{
+    int linha  = v - 65;
+
+    this->pos[linha] = -1;
+
+    return this->proxAdj(v);
+}
+
+Aresta* Grafo::proxAdj(const char &v) const{
+    int linha = v - 65;
+
+    this->pos[linha]++;
+
+    while(this->pos[linha] < N_VERTICES && this->pos[linha] == 0){
+        this->pos[linha]++;
+    }
+
+    if(this->pos[linha] == N_VERTICES){
+        return NULL;
+    }
+
+    Aresta *prox_aresta = new Aresta;
+
+    prox_aresta->v1 = v;
+    prox_aresta->v2 = this->pos[linha] + 65;
+    prox_aresta->peso = this->matriz_adjacencia[linha][this->pos[linha]];
+
+    return prox_aresta;
 }

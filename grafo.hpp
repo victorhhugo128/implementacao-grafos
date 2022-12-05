@@ -13,6 +13,12 @@ struct Aresta{
     int peso = 1;
 };
 
+/* void atribui_aresta(Aresta &aresta, const char &v1, const char &v2, int peso){
+    aresta.v1 = v1;
+    aresta.v2 = v2;
+    aresta.peso = peso;
+} */
+
 bool coordenadasValidas(int coordenadas[2]){
     if(coordenadas[0] >= 0 && coordenadas[1] >= 0){
         return true;
@@ -33,7 +39,10 @@ public:
     void mostrarMatriz() const; // (g)
     int retornarNVertices() const; // (h)
     int retornarNArestas() const; // (h)
-    int* retornaGrauVertice(const char &) const;
+    int* retornaGrauVertice(const char &) const; //(i-h)
+    bool listaAdjVazia(const char &) const;
+    Aresta* primeiroListaAdj(const char &) const;
+    Aresta* proxAdj(const char &) const;
 
 private:
     int* retornaCoordenadas(const char &v1, const char &v2) const; // retorna as coordenadas correspondentes aos vértices dados como entrada
@@ -41,6 +50,7 @@ private:
     int* retornaGrauVerticeDirecionado(const char &) const; // (j)
     char *vertices; // mapeia o rotulo do vertice ao numero atribuido a ele na matriz adjacencia
     int **matriz_adjacencia;
+    int *pos; // posição ao se percorrer as arestas de um vértice
     const int N_VERTICES;
     const bool DIRECIONADO;
 };
