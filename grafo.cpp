@@ -75,16 +75,28 @@ void Grafo::inserirConjuntoArestas(const Aresta arestas[], int n_arestas){
     }
 }
 
-/* Aresta Grafo::retiraAresta(const char &v1, const char &v2){
-    int* coordenadas = this->retornaCoordenadas(v1, v2);
+Aresta* Grafo::retiraAresta(const char &v1, const char &v2){
+    int *coordenadas = this->retornaCoordenadas(v1, v2);
+    Aresta *aresta_retirada = NULL; 
 
     if(!coordenadasValidas(coordenadas)){
-        cout << "Vértices inválidos.";
-        return;
+        cout << "Vértices inválidos.\n";
+        return NULL;
     }
 
+    if(this->matriz_adjacencia[coordenadas[0]][coordenadas[1]] == 0){
+        cout << "Aresta não existe.\n";
+        return NULL;
+    }
 
-} */
+    aresta_retirada = new Aresta;
+
+    aresta_retirada->v1 = v1;
+    aresta_retirada->v2 = v2;
+    aresta_retirada->peso = this->matriz_adjacencia[coordenadas[0]][coordenadas[1]];
+
+    return aresta_retirada;
+}
 
 
 bool Grafo::existeAresta(const char &v1, const char &v2) const{
@@ -99,6 +111,25 @@ bool Grafo::existeAresta(const char &v1, const char &v2) const{
     }
 
     return false;
+}
+
+vector<Aresta*> Grafo::obterAdjacencias(const char &v) const{
+    Aresta *adjacente = NULL;
+    vector<Aresta*> adjacencias;
+
+    int linha = v - 65;
+
+    for(int i = 0; i < this->N_VERTICES; i++){
+        if(this->matriz_adjacencia[linha][i] > 0){
+            adjacente = new Aresta;
+            adjacente->v1 = v;
+            adjacente->v2 = i + 65;
+            adjacente->peso = this->matriz_adjacencia[linha][i];
+            adjacencias.push_back(adjacente);
+            adjacente = NULL;
+        }
+    }
+    return adjacencias;
 }
 
 void Grafo::mostrarMatriz() const{
@@ -116,4 +147,23 @@ void Grafo::mostrarMatriz() const{
         cout << "\n";
     }
     cout << "\n";
+}
+
+int Grafo::retornarNVertices() const{
+    return this->N_VERTICES;
+}
+
+
+int Grafo::retornarNArestas() const{
+    int n_arestas = 0;
+
+    for(int linha = 0; linha < this->vertices.size(); linha++){
+        for(int coluna = 0; coluna < this->vertices.size(); coluna++){
+            if(this->matriz_adjacencia[linha][coluna] > 0){
+                n_arestas++;
+            }
+        }
+    }
+
+    return n_arestas;
 }

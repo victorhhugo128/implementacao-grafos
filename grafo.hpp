@@ -23,15 +23,19 @@ bool coordenadasValidas(int coordenadas[2]){
 class Grafo
 {   
 public:
-    Grafo(int = 5, bool = false); // cria grafo sem arestas
+    Grafo(int = 5, bool = false); // cria grafo sem arestas (a)
     ~Grafo();
-    int* retornaCoordenadas(const char &v1, const char &v2) const; // retorna as coordenadas correspondentes aos vértices dados como entrada
-    void inserirAresta(const char &, const char &, int = 1);
-    void inserirConjuntoArestas(const Aresta[], int); // insere um conjunto de arestas
-    Aresta retiraAresta(const char &, const char &);
-    bool existeAresta(const char &, const char &) const; // verifica se a aresta especificada existe
-    void mostrarMatriz() const;
+    void inserirAresta(const char &, const char &, int = 1); //(b)
+    void inserirConjuntoArestas(const Aresta[], int); // insere um conjunto de arestas (c)
+    Aresta* retiraAresta(const char &, const char &); // (d)
+    bool existeAresta(const char &, const char &) const; // verifica se a aresta especificada existe (e)
+    vector<Aresta*> obterAdjacencias(const char &) const; // obtém todas as adjacencias do vértice escolhido
+    void mostrarMatriz() const; // (g)
+    int retornarNVertices() const; // (h)
+    int retornarNArestas() const; // (h)
+
 private:
+    int* retornaCoordenadas(const char &v1, const char &v2) const; // retorna as coordenadas correspondentes aos vértices dados como entrada
     vector<char> vertices; // mapeia o rotulo do vertice ao numero atribuido a ele na matriz adjacencia
     vector<vector<int>> matriz_adjacencia;
     const int N_VERTICES;
