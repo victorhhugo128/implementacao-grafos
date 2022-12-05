@@ -39,6 +39,38 @@ int* Grafo::retornaCoordenadas(const char &v1, const char &v2) const{
     return coordenadas;
 }
 
+int* Grafo::retornaGrauVerticeNDirecionado(const char &v) const{
+    int grau, linha = v - 65;
+    for(int coluna = 0; coluna < N_VERTICES; coluna++){
+        if(this->matriz_adjacencia[linha][coluna] > 0){
+            grau++;
+        }
+    }
+
+    return &grau;
+}
+
+int* Grafo::retornaGrauVerticeDirecionado(const char &v) const{
+    int grau_entrada = 0, grau_saida = 0, linha = v - 65;
+    for(int coluna = 0; coluna < N_VERTICES; coluna++){
+        if(this->matriz_adjacencia[linha][coluna] > 0){
+            grau_saida++;
+        }
+    }
+    for(linha = 0; linha < N_VERTICES; linha++){
+        if(linha + 65 == v){
+            continue;
+        }
+        for(int coluna = 0; coluna < N_VERTICES; coluna++){
+            if(this->matriz_adjacencia[linha][coluna] > 0 && coluna == v - 65){
+                grau_entrada++;
+            }
+        }
+    }
+
+    return new int[2]{grau_entrada, grau_saida};
+}
+
 /* bool Grafo::coordenadasValidas(int coordenadas[2]) const{
     if(coordenadas[0] >= 0 && coordenadas[1] >= 0){
         return true;
@@ -47,6 +79,11 @@ int* Grafo::retornaCoordenadas(const char &v1, const char &v2) const{
 } */
 
 void Grafo::inserirAresta(const char &v1, const char &v2, int peso){
+    if(v1 == v2 && !DIRECIONADO){
+        cout << "Grafo não direcionado. Impossível adicionar aresta para si mesmo.\n\n";
+        return;
+    }
+
     int* coordenadas = this->retornaCoordenadas(v1, v2);
 
     if(coordenadasValidas(coordenadas)){
@@ -167,4 +204,15 @@ int Grafo::retornarNArestas() const{
     }
 
     return n_arestas;
+}
+
+int* Grafo::retornaGrauVertice(const char &v) const{
+    int *grau;
+    if(DIRECIONADO){
+        grau = this->retornaGrauVerticeDirecionado(v);
+    }
+    else{
+        grau = this->retornaGrauVerticeNDirecionado(v);
+    }
+    return grau;
 }

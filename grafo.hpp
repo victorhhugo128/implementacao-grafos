@@ -33,9 +33,12 @@ public:
     void mostrarMatriz() const; // (g)
     int retornarNVertices() const; // (h)
     int retornarNArestas() const; // (h)
+    int* retornaGrauVertice(const char &) const;
 
 private:
     int* retornaCoordenadas(const char &v1, const char &v2) const; // retorna as coordenadas correspondentes aos vértices dados como entrada
+    int* retornaGrauVerticeNDirecionado(const char &) const; // (i)
+    int* retornaGrauVerticeDirecionado(const char &) const; // (j)
     char *vertices; // mapeia o rotulo do vertice ao numero atribuido a ele na matriz adjacencia
     int **matriz_adjacencia;
     const int N_VERTICES;
