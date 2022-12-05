@@ -21,8 +21,10 @@ Grafo::~Grafo(){
 
 }
 
-void Grafo::inserirAresta(const char &v1, const char &v2, int peso){
-    int coordenadas[2] = {-1, -1};
+int* Grafo::retornaCoordenadas(const char &v1, const char &v2) const{
+    int* coordenadas = new int[2];
+    coordenadas[0] = -1;
+    coordenadas[1] = -1;
 
     for(int vertice = 0; vertice < N_VERTICES; vertice++){
         if(v1 == this->vertices[vertice]){
@@ -33,7 +35,20 @@ void Grafo::inserirAresta(const char &v1, const char &v2, int peso){
         }
     }
 
+    return coordenadas;
+}
+
+/* bool Grafo::coordenadasValidas(int coordenadas[2]) const{
     if(coordenadas[0] >= 0 && coordenadas[1] >= 0){
+        return true;
+    }
+    return false;
+} */
+
+void Grafo::inserirAresta(const char &v1, const char &v2, int peso){
+    int* coordenadas = this->retornaCoordenadas(v1, v2);
+
+    if(coordenadasValidas(coordenadas)){
         this->matriz_adjacencia[coordenadas[0]][coordenadas[1]] = peso;
         if(!DIRECIONADO){
             this->matriz_adjacencia[coordenadas[1]][coordenadas[0]] = peso;
@@ -44,10 +59,49 @@ void Grafo::inserirAresta(const char &v1, const char &v2, int peso){
         cout << "O conjunto de vértices não é válido.\n\n";
     }
 
+    delete coordenadas;
+
     return;
 } 
 
-void Grafo::mostrarMatriz(){
+void Grafo::inserirConjuntoArestas(const Aresta arestas[], int n_arestas){
+    char v1, v2;
+    int peso;
+    for(int i = 0; i < n_arestas;i++){
+        v1 = arestas[i].v1;
+        v2 = arestas[i].v2;
+        peso = arestas[i].peso; 
+        this->inserirAresta(v1, v2, peso);
+    }
+}
+
+/* Aresta Grafo::retiraAresta(const char &v1, const char &v2){
+    int* coordenadas = this->retornaCoordenadas(v1, v2);
+
+    if(!coordenadasValidas(coordenadas)){
+        cout << "Vértices inválidos.";
+        return;
+    }
+
+
+} */
+
+
+bool Grafo::existeAresta(const char &v1, const char &v2) const{
+    int* coordenadas = this->retornaCoordenadas(v1, v2);
+    if(!coordenadasValidas(coordenadas)){
+        cout << "Conjunto de vértices " << v1 << "-" << v2 << " inválido.\n";
+        return false;
+    }
+
+    if(matriz_adjacencia[coordenadas[0]][coordenadas[1]] > 0){
+        return true;
+    }
+
+    return false;
+}
+
+void Grafo::mostrarMatriz() const{
     cout << "\t";
     for(int vertice = 0; vertice < this->vertices.size(); vertice++){
         cout << this->vertices[vertice] << "\t";
