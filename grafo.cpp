@@ -25,7 +25,12 @@ Grafo::Grafo(int n_vertices, bool direcionado)
 }
 
 Grafo::~Grafo(){
-
+    delete [] this->vertices;
+    for(int linha = 0; linha < N_VERTICES; linha++){
+        delete [] this->matriz_adjacencia[linha];
+    }
+    delete [] this->matriz_adjacencia;
+    delete [] this->pos;
 }
 
 int* Grafo::retornaCoordenadas(const char &v1, const char &v2) const{
