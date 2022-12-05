@@ -19,12 +19,12 @@ struct Aresta{
     aresta.peso = peso;
 } */
 
-bool coordenadasValidas(int coordenadas[2]){
+/* bool coordenadasValidas(int coordenadas[2]){
     if(coordenadas[0] >= 0 && coordenadas[1] >= 0){
         return true;
     }
     return false;
-}
+} */
 
 class Grafo
 {   
@@ -48,6 +48,7 @@ private:
     int* retornaCoordenadas(const char &v1, const char &v2) const; // retorna as coordenadas correspondentes aos vértices dados como entrada
     int* retornaGrauVerticeNDirecionado(const char &) const; // (i)
     int* retornaGrauVerticeDirecionado(const char &) const; // (j)
+    static bool coordenadasValidas(int[]);
     char *vertices; // mapeia o rotulo do vertice ao numero atribuido a ele na matriz adjacencia
     int **matriz_adjacencia;
     int *pos; // posição ao se percorrer as arestas de um vértice

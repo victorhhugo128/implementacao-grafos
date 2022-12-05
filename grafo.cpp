@@ -269,3 +269,10 @@ Aresta* Grafo::proxAdj(const char &v) const{
 
     return prox_aresta;
 }
+
+bool Grafo::coordenadasValidas(int coordenadas[2]){
+    if(coordenadas[0] >= 0 && coordenadas[1] >= 0){
+        return true;
+    }
+    return false;
+}
