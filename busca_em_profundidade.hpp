@@ -22,13 +22,14 @@ public:
     void mostraClassificacaoAresta() const;
     bool grafoCiclico() const;
     void mostraOrdenacaoTopologica() const;
+    int *retornaTempoTermino() const;
+    int visitaDfs(const char &, int, int[]); // navega recursivamente por todos os vértices adjacentes
 private:
     Grafo *grafo;
     int *d, *t, **matriz_classifica_aresta, ciclos, ordenacao_indice;
     char *antecessor, *ordenacao_topologica;
 
     void classificaAresta(const Aresta &, int[]);
-    int visitaDfs(const char &, int, int[]); // navega recursuvamente por todos os vértices adjacentes
 };
 
 

@@ -33,6 +33,11 @@ BuscaEmProfundidade::~BuscaEmProfundidade()
     delete [] this->d;
     delete [] this->t;
     delete [] this->antecessor;
+    for(int linha = 0; linha < this->grafo->retornarNVertices(); linha++){
+        delete [] this->matriz_classifica_aresta[linha];
+    }
+    delete [] this->matriz_classifica_aresta;
+    delete [] this->ordenacao_topologica;
 }
 
 void BuscaEmProfundidade::buscaEmProfundidade(const char &v){
@@ -178,4 +183,14 @@ void BuscaEmProfundidade::mostraOrdenacaoTopologica() const{
         cout << " -> |" << this->ordenacao_topologica[vertice] << "|";
     }
     cout << "⏚\n";
+}
+
+int *BuscaEmProfundidade::retornaTempoTermino() const{
+    int n = this->grafo->retornarNVertices(), *ret_t = new int[n];
+
+    for(int tempo = 0; tempo < n; tempo++){
+        ret_t[tempo] = this->t[tempo];
+    }
+
+    return ret_t;
 }
