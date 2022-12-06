@@ -68,9 +68,11 @@ int BuscaEmProfundidade::visitaDfs(const char &u, int tempo, int cor[]){
     if(!this->grafo->listaAdjVazia(u)){ // verifica se o vértice tem adjacências
         Aresta *aresta = this->grafo->primeiroListaAdj(u); // retorna primeira aresta do vértice
         while(aresta != NULL){
-            this->classificaAresta(*aresta, cor);
             char v = aresta->v2;
             indice_v = v - 65; // calcula índice
+            if(this->matriz_classifica_aresta[indice_u][indice_v] == -1){ // evita reclassificação de arestas para grafos não direcionados
+                this->classificaAresta(*aresta, cor);
+            }
             if(cor[indice_v] == BRANCO){
                 this->antecessor[indice_v] = u;
                 tempo = this->visitaDfs(v, tempo, cor); // chama o método recursivamente para vértice adjancente
@@ -99,24 +101,33 @@ void BuscaEmProfundidade::mostrarResultados() const{
 
 void BuscaEmProfundidade::classificaAresta(const Aresta &aresta, int cor[]){
     int indice_u = aresta.v1 - 65, indice_v = aresta.v2 - 65;
+    bool direcionado = this->grafo->DIRECIONADO;
 
     if(cor[indice_v] == BRANCO){
         this->matriz_classifica_aresta[indice_u][indice_v] = ARVORE;
+        if(!direcionado)
+            this->matriz_classifica_aresta[indice_v][indice_u] = ARVORE;
         return;
     }
 
     else if(cor[indice_v] == CINZA){
         this->matriz_classifica_aresta[indice_u][indice_v] = RETORNO;
         this->ciclos += 1;
+        if(!direcionado)
+            this->matriz_classifica_aresta[indice_v][indice_u] = RETORNO;
         return;
     }
     
     if(this->d[indice_u] > this->d[indice_v]){
         this->matriz_classifica_aresta[indice_u][indice_v] = CRUZAMENTO;
+        if(!direcionado)
+            this->matriz_classifica_aresta[indice_v][indice_u] = CRUZAMENTO;
         return;
     }
 
     this->matriz_classifica_aresta[indice_u][indice_v] = AVANCO;
+    if(!direcionado)
+        this->matriz_classifica_aresta[indice_v][indice_u] = AVANCO;
 }
 
 void BuscaEmProfundidade::mostraClassificacaoAresta() const{
