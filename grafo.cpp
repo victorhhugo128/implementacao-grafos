@@ -277,3 +277,15 @@ bool Grafo::coordenadasValidas(int coordenadas[2]){
     }
     return false;
 }
+
+Grafo *Grafo::grafoTransposto() const{
+    Grafo *grafo_transposto = new Grafo(this->N_VERTICES, DIRECIONADO);
+
+    for(int linha = 0; linha < this->N_VERTICES; linha++){
+        for(int coluna = 0; coluna < this->N_VERTICES; coluna++){
+            grafo_transposto->matriz_adjacencia[coluna][linha] = this->matriz_adjacencia[linha][coluna];
+        }
+    }
+
+    return grafo_transposto;
+}

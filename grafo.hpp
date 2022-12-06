@@ -45,6 +45,7 @@ public:
     bool listaAdjVazia(const char &) const; // verifica se o vértice especificado tem adjacências a ele
     Aresta* primeiroListaAdj(const char &) const; // retorna primeira adjacência de vértice especificado
     Aresta* proxAdj(const char &) const; // retorna a próxima aresta a partir da array pos[] atual 
+    Grafo* grafoTransposto() const;
 
 private:
     int* retornaCoordenadas(const char &v1, const char &v2) const; // retorna as coordenadas correspondentes aos vértices dados como entrada
