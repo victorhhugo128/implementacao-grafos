@@ -5,22 +5,22 @@ using std::cout;
 
 Grafo::Grafo(int n_vertices, bool direcionado)
 :N_VERTICES(n_vertices), DIRECIONADO(direcionado){
-    this->vertices = new char[N_VERTICES];
-    for(int letra = 65; letra < 65 + N_VERTICES; letra++){
+    this->vertices = new char[N_VERTICES]; // aloca array de char para vértices
+    for(int letra = 65; letra < 65 + N_VERTICES; letra++){ // itera pelos cógidos da tabela ASCII começando por A (cód. 65)
         this->vertices[letra - 65] = letra;
     }
 
-    this->matriz_adjacencia = new int *[N_VERTICES];
+    this->matriz_adjacencia = new int *[N_VERTICES]; // aloca array de ponteiros para guardar matriz_adjacencia
     for(int linha = 0; linha < N_VERTICES; linha++){
-        this->matriz_adjacencia[linha] = new int[N_VERTICES];
+        this->matriz_adjacencia[linha] = new int[N_VERTICES]; // aloca uma array de inteiros para cada linha
         for(int coluna = 0; coluna < N_VERTICES; coluna++){
-            this->matriz_adjacencia[linha][coluna] = 0;
+            this->matriz_adjacencia[linha][coluna] = 0; // atribui todos os valores para 0 
         }
     }
 
-    this->pos = new int[N_VERTICES];
+    this->pos = new int[N_VERTICES]; // aloca array de inteiros para servir de navegação pelas arestas de cada vértice
     for(int vertice = 0; vertice < N_VERTICES; vertice++){
-        this->pos[vertice] = -1;
+        this->pos[vertice] = -1; // atribui todos os valores de navegação para -1
     }
 }
 
@@ -35,10 +35,9 @@ Grafo::~Grafo(){
 
 int* Grafo::retornaCoordenadas(const char &v1, const char &v2) const{
     int* coordenadas = new int[2];
-    coordenadas[0] = -1;
-    coordenadas[1] = -1;
+    coordenadas[0] = -1, coordenadas[1] = -1;
 
-    for(int vertice = 0; vertice < N_VERTICES; vertice++){
+    for(int vertice = 0; vertice < N_VERTICES; vertice++){ // itera pelos vértices para saber se os vértices existem na matriz
         if(v1 == this->vertices[vertice]){
             coordenadas[0] = vertice;
         }
@@ -47,7 +46,7 @@ int* Grafo::retornaCoordenadas(const char &v1, const char &v2) const{
         }
     }
 
-    return coordenadas;
+    return coordenadas; // retorna par de coordenadas
 }
 
 int* Grafo::retornaGrauVerticeNDirecionado(const char &v) const{
@@ -63,7 +62,7 @@ int* Grafo::retornaGrauVerticeNDirecionado(const char &v) const{
 
 int* Grafo::retornaGrauVerticeDirecionado(const char &v) const{
     int grau_entrada = 0, grau_saida = 0, linha = v - 65;
-    for(int coluna = 0; coluna < N_VERTICES; coluna++){
+    for(int coluna = 0; coluna < N_VERTICES; coluna++){ // conta grau de saída
         if(this->matriz_adjacencia[linha][coluna] > 0){
             grau_saida++;
         }
@@ -72,7 +71,7 @@ int* Grafo::retornaGrauVerticeDirecionado(const char &v) const{
         if(linha + 65 == v){
             continue;
         }
-        for(int coluna = 0; coluna < N_VERTICES; coluna++){
+        for(int coluna = 0; coluna < N_VERTICES; coluna++){ // conta grau de entrada
             if(this->matriz_adjacencia[linha][coluna] > 0 && coluna == v - 65){
                 grau_entrada++;
             }
@@ -90,16 +89,16 @@ int* Grafo::retornaGrauVerticeDirecionado(const char &v) const{
 } */
 
 void Grafo::inserirAresta(const char &v1, const char &v2, int peso){
-    if(v1 == v2 && !DIRECIONADO){
+    if(v1 == v2 && !DIRECIONADO){ // evita self-loops
         cout << "Grafo não direcionado. Impossível adicionar aresta para si mesmo.\n\n";
         return;
     }
 
     int* coordenadas = this->retornaCoordenadas(v1, v2);
 
-    if(coordenadasValidas(coordenadas)){
+    if(coordenadasValidas(coordenadas)){ // verifica se as coordenadas para a matriz são válidas
         this->matriz_adjacencia[coordenadas[0]][coordenadas[1]] = peso;
-        if(!DIRECIONADO){
+        if(!DIRECIONADO){ // se não o grafo não for direcionado
             this->matriz_adjacencia[coordenadas[1]][coordenadas[0]] = peso;
         }
         cout << "Aresta " << v1 << "-" << v2 << " adicionada com sucesso.\n\n";
@@ -144,6 +143,8 @@ Aresta* Grafo::retiraAresta(const char &v1, const char &v2){
     aresta_retirada->v2 = v2;
     aresta_retirada->peso = this->matriz_adjacencia[coordenadas[0]][coordenadas[1]];
 
+    this->matriz_adjacencia[coordenadas[0]][coordenadas[1]] = 0;
+
     return aresta_retirada;
 }
 
@@ -166,15 +167,15 @@ vector<Aresta*> Grafo::obterAdjacencias(const char &v) const{
     Aresta *adjacente = NULL;
     vector<Aresta*> adjacencias;
 
-    int linha = v - 65;
+    int linha = v - 65; // indice do vértice v na amtriz
 
-    for(int i = 0; i < this->N_VERTICES; i++){
+    for(int i = 0; i < this->N_VERTICES; i++){ // itera pela matriz
         if(this->matriz_adjacencia[linha][i] > 0){
             adjacente = new Aresta;
             adjacente->v1 = v;
             adjacente->v2 = i + 65;
             adjacente->peso = this->matriz_adjacencia[linha][i];
-            adjacencias.push_back(adjacente);
+            adjacencias.push_back(adjacente); // armazena arestas adjacentes no vector
             adjacente = NULL;
         }
     }
@@ -219,11 +220,11 @@ int Grafo::retornarNArestas() const{
 
 int* Grafo::retornaGrauVertice(const char &v) const{
     int *grau;
-    if(DIRECIONADO){
+    if(DIRECIONADO){ // se não direcionado, retorna grau do vértice
         grau = this->retornaGrauVerticeDirecionado(v);
     }
-    else{
-        grau = this->retornaGrauVerticeNDirecionado(v);
+    else{ //s se direcionado, retorna grau de entrada e saída em uma array
+        grau = this->retornaGrauVerticeNDirecionado(v); // [entrada, saída]
     }
     return grau;
 }
