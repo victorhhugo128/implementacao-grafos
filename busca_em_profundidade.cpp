@@ -19,7 +19,7 @@ BuscaEmProfundidade::~BuscaEmProfundidade()
     delete [] this->antecessor;
 }
 
-void BuscaEmProfundidade::buscaEmProfundidade(){
+void BuscaEmProfundidade::buscaEmProfundidade(const char &v){
     int n_vertices = this->grafo->retornarNVertices(), tempo = 0, *cor = new int[n_vertices];
 
     for(int vertice = 0; vertice < n_vertices; vertice++){
@@ -27,11 +27,21 @@ void BuscaEmProfundidade::buscaEmProfundidade(){
         this->antecessor[vertice] = 48;
     }
 
-    for(int vertice = 0; vertice < n_vertices; vertice++){
+    /* for(int vertice = 0; vertice < n_vertices; vertice++){
         if(cor[vertice] == BRANCO){
             tempo = this->visitaDfs(vertice + 65, tempo, cor);
         }
-    }
+    } */
+
+    int indice = v - 65, vertice = indice;
+
+    do{
+        if(cor[vertice] == BRANCO){
+            tempo = this->visitaDfs(vertice + 65, tempo, cor);
+        }
+        vertice = (vertice + 1) % n_vertices;
+    }while(vertice != indice);
+
 }
 
 int BuscaEmProfundidade::visitaDfs(const char &u, int tempo, int cor[]){
@@ -41,13 +51,14 @@ int BuscaEmProfundidade::visitaDfs(const char &u, int tempo, int cor[]){
     this->d[indice_u] = ++tempo;
 
     if(!this->grafo->listaAdjVazia(u)){
+        cout << u << "\n";
         Aresta *aresta = this->grafo->primeiroListaAdj(u);
         while(aresta != NULL){
             char v = aresta->v2;
             indice_v = v - 65;
+            cout << cor[indice_v] << "\n";
+            cout << aresta->v1 << ", " << aresta->v2 << ", " << aresta->peso << "\n";
             if(cor[indice_v] == BRANCO){
-                cout << cor[indice_v] << "\n";
-                cout << v << "\n";
                 this->antecessor[indice_v] = u;
                 tempo = this->visitaDfs(v, tempo, cor);
             }

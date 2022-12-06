@@ -12,7 +12,7 @@ public:
     BuscaEmProfundidade(Grafo &);
     ~BuscaEmProfundidade();
 
-    void buscaEmProfundidade();
+    void buscaEmProfundidade(const char &);
     void mostrarResultados() const;
 private:
     Grafo *grafo;
