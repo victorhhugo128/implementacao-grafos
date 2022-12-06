@@ -122,6 +122,31 @@ int main(){
     busca_slide->grafoCiclico();
     busca_slide->mostraOrdenacaoTopologica();
 
+    /* Grafo *nao_direcionado_teste = new Grafo(4, false);
+
+    nao_direcionado_teste->inserirAresta('A', 'C');
+    nao_direcionado_teste->inserirAresta('C', 'B');
+    nao_direcionado_teste->inserirAresta('B', 'A');
+    nao_direcionado_teste->inserirAresta('C', 'D');
+
+    nao_direcionado_teste->mostrarMatriz();
+
+    BuscaEmProfundidade *busca_nao_direcionado = new BuscaEmProfundidade(*nao_direcionado_teste);
+
+    busca_nao_direcionado->buscaEmProfundidade('A');
+    busca_nao_direcionado->mostrarResultados();
+    busca_nao_direcionado->mostraClassificacaoAresta();
+    busca_nao_direcionado->grafoCiclico();
+    busca_nao_direcionado->mostraOrdenacaoTopologica();
+
+    nao_direcionado_teste->mostrarMatriz(); */
+    
+    Grafo *transposto = grafo_exemplo_slide->grafoTransposto();
+
+    grafo_exemplo_slide->mostrarMatriz();
+
+    transposto->mostrarMatriz();
+
 
    /*  ListaAdjacencia lista('A');
 
