@@ -71,7 +71,7 @@ int main(){
 
     cout << grafo_teste->retornarNArestas(); */
 
-    Grafo *grafo_exemplo_0 = new Grafo(6, true);
+    /* Grafo *grafo_exemplo_0 = new Grafo(6, true);
 
     grafo_exemplo_0->inserirAresta('A', 'B');
     grafo_exemplo_0->inserirAresta('A', 'E');
@@ -91,6 +91,37 @@ int main(){
     busca_exemplo_0->mostrarResultados();
 
     busca_exemplo_0->mostraClassificacaoAresta();
+    busca_exemplo_0->mostraOrdenacaoTopologica(); */
+
+    Grafo *grafo_exemplo_slide = new Grafo(10, true);
+
+    grafo_exemplo_slide->mostrarMatriz();
+
+    grafo_exemplo_slide->inserirAresta('A', 'B');
+    grafo_exemplo_slide->inserirAresta('A', 'C');
+    grafo_exemplo_slide->inserirAresta('A', 'D');
+    grafo_exemplo_slide->inserirAresta('A', 'F');
+    grafo_exemplo_slide->inserirAresta('B', 'C');
+    grafo_exemplo_slide->inserirAresta('C', 'D');
+    grafo_exemplo_slide->inserirAresta('C', 'E');
+    grafo_exemplo_slide->inserirAresta('E', 'G');
+    grafo_exemplo_slide->inserirAresta('F', 'E');
+    grafo_exemplo_slide->inserirAresta('F', 'G');
+    grafo_exemplo_slide->inserirAresta('G', 'H');
+    grafo_exemplo_slide->inserirAresta('G', 'I');
+    grafo_exemplo_slide->inserirAresta('H', 'I');
+    grafo_exemplo_slide->inserirAresta('J', 'G');
+
+    grafo_exemplo_slide->mostrarMatriz();
+
+    BuscaEmProfundidade *busca_slide = new BuscaEmProfundidade(*grafo_exemplo_slide);
+
+    busca_slide->buscaEmProfundidade('A');
+    busca_slide->mostrarResultados();
+    busca_slide->mostraClassificacaoAresta();
+    busca_slide->grafoCiclico();
+    busca_slide->mostraOrdenacaoTopologica();
+
 
    /*  ListaAdjacencia lista('A');
 
