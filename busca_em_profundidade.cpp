@@ -10,10 +10,12 @@ BuscaEmProfundidade::BuscaEmProfundidade(Grafo &grafo)
     this->d = new int[n];
     this->t = new int[n];
     this->antecessor = new char[n];
+    this->ordenacao_topologica = new char[n];
     for(int vertice = 0; vertice < n; vertice++){ // inicializa arrays
         this->d[vertice] = -1;
         this->t[vertice] = -1;
         this->antecessor[vertice] = 48; // inicializa com char '0'
+        this->ordenacao_topologica[vertice] = 48;
     }
     this->matriz_classifica_aresta = new int *[n];
     for(int linha = 0; linha < n; linha++){
@@ -23,6 +25,7 @@ BuscaEmProfundidade::BuscaEmProfundidade(Grafo &grafo)
         }
     }
     this->ciclos = 0;
+    this->ordenacao_indice = n - 1;
 }
 
 BuscaEmProfundidade::~BuscaEmProfundidade()
@@ -77,7 +80,10 @@ int BuscaEmProfundidade::visitaDfs(const char &u, int tempo, int cor[]){
     }
 
     cor[indice_u] = PRETO; // conclui e fecha vértice
+    cout << u << ", " << cor[indice_u] << "\n";
     this->t[indice_u] = ++tempo; // incrementa tempo e atruibui tempo de término ao vértice atual
+    this->ordenacao_topologica[ordenacao_indice] = u;
+    this->ordenacao_indice--; 
 
     return tempo;
 }
@@ -104,7 +110,7 @@ void BuscaEmProfundidade::classificaAresta(const Aresta &aresta, int cor[]){
         this->ciclos += 1;
         return;
     }
-
+    
     if(this->d[indice_u] > this->d[indice_v]){
         this->matriz_classifica_aresta[indice_u][indice_v] = CRUZAMENTO;
         return;
@@ -144,4 +150,21 @@ bool BuscaEmProfundidade::grafoCiclico() const{
 
     cout << "O grafo tem " << this->ciclos << " ciclo(s).\n\n";
     return true;
+}
+
+void BuscaEmProfundidade::mostraOrdenacaoTopologica() const{
+    if(!this->grafo->DIRECIONADO){
+        cout << "O grafo é não direcionado. Não há ordenação topológica.\n\n";
+        return;
+    }
+    else if(this->ciclos > 0){
+        cout << "O grafo tem ciclos. Não há ordenação topológica.\n\n";
+        return;
+    }
+    cout << "Ordenação topológica:\n";
+    cout << "|" << this->ordenacao_topologica[0] << "|";
+    for(int vertice = 1; vertice < this->grafo->retornarNVertices(); vertice++){
+        cout << " -> |" << this->ordenacao_topologica[vertice] << "|";
+    }
+    cout << "⏚\n";
 }

@@ -21,10 +21,11 @@ public:
     void mostrarResultados() const; // imprime cada vértice com o resultado da busca em profundidade anterior
     void mostraClassificacaoAresta() const;
     bool grafoCiclico() const;
+    void mostraOrdenacaoTopologica() const;
 private:
     Grafo *grafo;
-    int *d, *t, **matriz_classifica_aresta, ciclos;
-    char *antecessor;
+    int *d, *t, **matriz_classifica_aresta, ciclos, ordenacao_indice;
+    char *antecessor, *ordenacao_topologica;
 
     void classificaAresta(const Aresta &, int[]);
     int visitaDfs(const char &, int, int[]); // navega recursuvamente por todos os vértices adjacentes
