@@ -3,6 +3,7 @@
 #include<array>
 #include "grafo.cpp"
 #include "lista_adjacencia.cpp"
+#include "busca_em_profundidade.cpp"
 
 using std::cout;
 using std::end;
@@ -11,7 +12,7 @@ using std::begin;
 int main(){
     char teste = 65;
     Grafo *grafo_teste;
-    grafo_teste = new Grafo(5, true);
+    grafo_teste = new Grafo(3, true);
     vector<Aresta*> adjacencias_teste;
 
     grafo_teste->mostrarMatriz();
@@ -61,6 +62,12 @@ int main(){
     graus[1] << "\n\n";
 
     grafo_teste->mostrarMatriz();
+
+    BuscaEmProfundidade busca_teste(*grafo_teste);
+
+    busca_teste.buscaEmProfundidade();
+
+    busca_teste.mostrarResultados();
 
 
    /*  ListaAdjacencia lista('A');
