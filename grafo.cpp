@@ -253,7 +253,7 @@ Aresta* Grafo::proxAdj(const char &v) const{
 
     this->pos[linha]++;
 
-    while(this->pos[linha] < N_VERTICES && this->pos[linha] == 0){
+    while(this->pos[linha] < N_VERTICES && this->matriz_adjacencia[linha][this->pos[linha]]== 0){
         this->pos[linha]++;
     }
 
