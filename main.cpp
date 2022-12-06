@@ -10,7 +10,7 @@ using std::end;
 using std::begin;
 
 int main(){
-    char teste = 65;
+    /* char teste = 65;
     Grafo *grafo_teste;
     grafo_teste = new Grafo(3, true);
     vector<Aresta*> adjacencias_teste;
@@ -65,10 +65,32 @@ int main(){
 
     BuscaEmProfundidade busca_teste(*grafo_teste);
 
-    busca_teste.buscaEmProfundidade();
+    busca_teste.buscaEmProfundidade('A');
 
     busca_teste.mostrarResultados();
 
+    cout << grafo_teste->retornarNArestas(); */
+
+    Grafo *grafo_exemplo_0 = new Grafo(6, true);
+
+    grafo_exemplo_0->inserirAresta('A', 'B');
+    grafo_exemplo_0->inserirAresta('A', 'E');
+    grafo_exemplo_0->inserirAresta('B', 'C');
+    grafo_exemplo_0->inserirAresta('B', 'E');
+    grafo_exemplo_0->inserirAresta('C', 'D');
+    grafo_exemplo_0->inserirAresta('D', 'B');
+    grafo_exemplo_0->inserirAresta('E', 'D');
+    grafo_exemplo_0->inserirAresta('F', 'A');
+    grafo_exemplo_0->inserirAresta('F', 'E');
+
+    grafo_exemplo_0->mostrarMatriz();
+
+    BuscaEmProfundidade *busca_exemplo_0 = new BuscaEmProfundidade(*grafo_exemplo_0);
+
+    busca_exemplo_0->buscaEmProfundidade('A');
+    busca_exemplo_0->mostrarResultados();
+
+    busca_exemplo_0->mostraClassificacaoAresta();
 
    /*  ListaAdjacencia lista('A');
 
