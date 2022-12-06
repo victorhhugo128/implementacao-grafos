@@ -20,9 +20,10 @@ public:
     void buscaEmProfundidade(const char &); // método para busca em profundidade a partir de um vértice
     void mostrarResultados() const; // imprime cada vértice com o resultado da busca em profundidade anterior
     void mostraClassificacaoAresta() const;
+    bool grafoCiclico() const;
 private:
     Grafo *grafo;
-    int *d, *t, **matriz_classifica_aresta;
+    int *d, *t, **matriz_classifica_aresta, ciclos;
     char *antecessor;
 
     void classificaAresta(const Aresta &, int[]);

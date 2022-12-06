@@ -22,6 +22,7 @@ BuscaEmProfundidade::BuscaEmProfundidade(Grafo &grafo)
             this->matriz_classifica_aresta[linha][coluna] = -1;
         }
     }
+    this->ciclos = 0;
 }
 
 BuscaEmProfundidade::~BuscaEmProfundidade()
@@ -100,6 +101,7 @@ void BuscaEmProfundidade::classificaAresta(const Aresta &aresta, int cor[]){
 
     else if(cor[indice_v] == CINZA){
         this->matriz_classifica_aresta[indice_u][indice_v] = RETORNO;
+        this->ciclos += 1;
         return;
     }
 
@@ -132,4 +134,14 @@ void BuscaEmProfundidade::mostraClassificacaoAresta() const{
         cout << "\n";
     }
     cout << "\n";
+}
+
+bool BuscaEmProfundidade::grafoCiclico() const{
+    if(this->ciclos == 0){
+        cout << "O grafo não tem ciclos.\n\n";
+        return false;
+    }
+
+    cout << "O grafo tem " << this->ciclos << " ciclo(s).\n\n";
+    return true;
 }
