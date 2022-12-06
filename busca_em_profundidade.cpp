@@ -15,6 +15,13 @@ BuscaEmProfundidade::BuscaEmProfundidade(Grafo &grafo)
         this->t[vertice] = -1;
         this->antecessor[vertice] = 48; // inicializa com char '0'
     }
+    this->matriz_classifica_aresta = new int *[n];
+    for(int linha = 0; linha < n; linha++){
+        this->matriz_classifica_aresta[linha] = new int[n];
+        for(int coluna = 0; coluna < n; coluna++){
+            this->matriz_classifica_aresta[linha][coluna] = -1;
+        }
+    }
 }
 
 BuscaEmProfundidade::~BuscaEmProfundidade()
@@ -57,6 +64,7 @@ int BuscaEmProfundidade::visitaDfs(const char &u, int tempo, int cor[]){
     if(!this->grafo->listaAdjVazia(u)){ // verifica se o vértice tem adjacências
         Aresta *aresta = this->grafo->primeiroListaAdj(u); // retorna primeira aresta do vértice
         while(aresta != NULL){
+            this->classificaAresta(*aresta, cor);
             char v = aresta->v2;
             indice_v = v - 65; // calcula índice
             if(cor[indice_v] == BRANCO){
@@ -80,4 +88,48 @@ void BuscaEmProfundidade::mostrarResultados() const{
         cout << "Vértice " << v << ":\nd[" << v << "] = " << d[vertice] << "\nt[" << 
         v << "] = " << t[vertice] << "\nAntecessor[" << v << "] = " << antecessor[vertice] << "\n\n"; 
     }
+}
+
+void BuscaEmProfundidade::classificaAresta(const Aresta &aresta, int cor[]){
+    int indice_u = aresta.v1 - 65, indice_v = aresta.v2 - 65;
+
+    if(cor[indice_v] == BRANCO){
+        this->matriz_classifica_aresta[indice_u][indice_v] = ARVORE;
+        return;
+    }
+
+    else if(cor[indice_v] == CINZA){
+        this->matriz_classifica_aresta[indice_u][indice_v] = RETORNO;
+        return;
+    }
+
+    if(this->d[indice_u] > this->d[indice_v]){
+        this->matriz_classifica_aresta[indice_u][indice_v] = CRUZAMENTO;
+        return;
+    }
+
+    this->matriz_classifica_aresta[indice_u][indice_v] = AVANCO;
+}
+
+void BuscaEmProfundidade::mostraClassificacaoAresta() const{
+    cout << "\t";
+    int n = this->grafo->retornarNVertices();
+    for(int vertice = 0; vertice < n; vertice++){
+        cout << this->grafo->vertices[vertice] << "\t";
+    }
+    cout << "\n";
+
+    for(int linha = 0; linha < n; linha++){
+        cout << this->grafo->vertices[linha];
+        for(int coluna = 0; coluna < n; coluna++){
+            cout << "\t";
+            if(this->matriz_classifica_aresta[linha][coluna] == -1){
+                cout << " ";
+                continue;
+            }
+            cout << this->matriz_classifica_aresta[linha][coluna];
+        }
+        cout << "\n";
+    }
+    cout << "\n";
 }

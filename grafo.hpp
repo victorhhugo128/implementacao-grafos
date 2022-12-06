@@ -29,6 +29,8 @@ struct Aresta{
 class Grafo
 {   
 public:
+    friend class BuscaEmProfundidade;
+
     Grafo(int = 5, bool = false); // cria grafo sem arestas (a)
     ~Grafo();
     void inserirAresta(const char &, const char &, int = 1); //(b)
