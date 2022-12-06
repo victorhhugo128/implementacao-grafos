@@ -4,6 +4,7 @@
 #include "grafo.cpp"
 #include "lista_adjacencia.cpp"
 #include "busca_em_profundidade.cpp"
+#include "componenentes_fortemente_conectados.cpp"
 
 using std::cout;
 using std::end;
@@ -93,7 +94,7 @@ int main(){
     busca_exemplo_0->mostraClassificacaoAresta();
     busca_exemplo_0->mostraOrdenacaoTopologica(); */
 
-    Grafo *grafo_exemplo_slide = new Grafo(10, true);
+    /* Grafo *grafo_exemplo_slide = new Grafo(10, true);
 
     grafo_exemplo_slide->mostrarMatriz();
 
@@ -122,6 +123,13 @@ int main(){
     busca_slide->grafoCiclico();
     busca_slide->mostraOrdenacaoTopologica();
 
+    Grafo *transposto = grafo_exemplo_slide->grafoTransposto();
+
+    grafo_exemplo_slide->mostrarMatriz();
+
+    transposto->mostrarMatriz(); */
+
+
     /* Grafo *nao_direcionado_teste = new Grafo(4, false);
 
     nao_direcionado_teste->inserirAresta('A', 'C');
@@ -140,12 +148,49 @@ int main(){
     busca_nao_direcionado->mostraOrdenacaoTopologica();
 
     nao_direcionado_teste->mostrarMatriz(); */
-    
-    Grafo *transposto = grafo_exemplo_slide->grafoTransposto();
 
-    grafo_exemplo_slide->mostrarMatriz();
+    /* Grafo *grafo_conectado = new Grafo(7, true);
+
+    grafo_conectado->inserirAresta('A', 'B');
+    grafo_conectado->inserirAresta('B', 'C');
+    grafo_conectado->inserirAresta('C', 'A');
+    grafo_conectado->inserirAresta('C', 'E');
+    grafo_conectado->inserirAresta('E', 'D');
+    grafo_conectado->inserirAresta('D', 'G');
+    grafo_conectado->inserirAresta('G', 'F');
+    grafo_conectado->inserirAresta('F', 'D'); */
+
+    /* Grafo *grafo_conectado = new Grafo(8, true);
+
+    grafo_conectado->inserirAresta('A', 'B');
+    grafo_conectado->inserirAresta('B', 'C');
+    grafo_conectado->inserirAresta('B', 'F');
+    grafo_conectado->inserirAresta('B', 'E');
+    grafo_conectado->inserirAresta('C', 'G');
+    grafo_conectado->inserirAresta('C', 'D');
+    grafo_conectado->inserirAresta('D', 'C');
+    grafo_conectado->inserirAresta('D', 'H');
+    grafo_conectado->inserirAresta('E', 'A');
+    grafo_conectado->inserirAresta('E', 'F');
+    grafo_conectado->inserirAresta('F', 'G');
+    grafo_conectado->inserirAresta('G', 'H');
+    grafo_conectado->inserirAresta('G', 'F');
+    grafo_conectado->inserirAresta('H', 'H');
+    grafo_conectado->mostrarMatriz();
+
+    BuscaEmProfundidade *busca = new BuscaEmProfundidade(*grafo_conectado);
+
+    busca->buscaEmProfundidade('A');
+    busca->mostrarResultados();
+    Grafo *transposto = grafo_conectado->grafoTransposto();
 
     transposto->mostrarMatriz();
+
+    Cfc *componentes = new Cfc(*grafo_conectado);
+
+    componentes->cfc();
+    componentes->mostrarArvores(); */
+
 
 
    /*  ListaAdjacencia lista('A');
