@@ -5,6 +5,7 @@
 #include "lista_adjacencia.cpp"
 #include "busca_em_profundidade.cpp"
 #include "componenentes_fortemente_conectados.cpp"
+#include "busca_em_largura.cpp"
 
 using std::cout;
 using std::end;
@@ -176,7 +177,23 @@ int main(){
     grafo_conectado->inserirAresta('G', 'H');
     grafo_conectado->inserirAresta('G', 'F');
     grafo_conectado->inserirAresta('H', 'H');
-    grafo_conectado->mostrarMatriz();
+    grafo_conectado->mostrarMatriz(); */
+
+    Grafo *grafo_conectado = new Grafo(8, true);
+
+    grafo_conectado->inserirAresta('A', 'B');
+    grafo_conectado->inserirAresta('B', 'C');
+    grafo_conectado->inserirAresta('B', 'E');
+    grafo_conectado->inserirAresta('B', 'F');
+    grafo_conectado->inserirAresta('C', 'D');
+    grafo_conectado->inserirAresta('C', 'G');
+    grafo_conectado->inserirAresta('D', 'C');
+    grafo_conectado->inserirAresta('D', 'H');
+    grafo_conectado->inserirAresta('E', 'A');
+    grafo_conectado->inserirAresta('F', 'G');
+    grafo_conectado->inserirAresta('G', 'F');
+    grafo_conectado->inserirAresta('G', 'H');
+    grafo_conectado->inserirAresta('H', 'H');
 
     BuscaEmProfundidade *busca = new BuscaEmProfundidade(*grafo_conectado);
 
@@ -189,7 +206,13 @@ int main(){
     Cfc *componentes = new Cfc(*grafo_conectado);
 
     componentes->cfc();
-    componentes->mostrarArvores(); */
+    componentes->mostrarArvores();
+
+    BuscaEmLargura *busca_largura = new BuscaEmLargura(*grafo_conectado);
+
+    busca_largura->buscaEmLargura('A');
+
+    busca_largura->mostraTempoDescoberta();
 
 
 
