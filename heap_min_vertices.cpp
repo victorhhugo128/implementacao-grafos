@@ -28,11 +28,11 @@ int HeapMinVertices::dir(int indice){
     return indice * 2  + 2;
 }
 
-void HeapMinVertices::adicionaElemento(VerticeCaminho &elemento){
+void HeapMinVertices::adicionaElemento(char &antecessor, char &vertice, int distancia){
     VerticeCaminho *temp = new VerticeCaminho;
-    temp->distancia = elemento.distancia;
-    temp->antecessor = elemento.antecessor;
-    temp->vertice = elemento.vertice;
+    temp->distancia = distancia;
+    temp->antecessor = antecessor;
+    temp->vertice = vertice;
     this->vertices.push_back(temp);
     this->constroiMinHeap();
 }
@@ -87,4 +87,17 @@ VerticeCaminho *HeapMinVertices::retiraMin(){
     this->constroiMinHeap();
 
     return temp;
+}
+
+void HeapMinVertices::retiraVerticeV(const char &u){
+    for(int vertice = 0; vertice < this->vertices.size(); vertice++){
+        if(u == this->vertices[vertice]->vertice){
+            this->vertices.erase(vertices.begin() + vertice);
+        }
+    }
+    this->constroiMinHeap();
+}
+
+bool HeapMinVertices::listaVazia() const{
+    return this->vertices.empty();
 }

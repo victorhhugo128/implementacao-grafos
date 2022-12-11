@@ -14,10 +14,12 @@ class HeapMinVertices
     public:
         HeapMinVertices();
         ~HeapMinVertices();
-        void adicionaElemento(VerticeCaminho&);
+        void adicionaElemento(char &, char &, int);
         void constroiMinHeap();
         void imprimeMinHeap();
         VerticeCaminho* retiraMin();
+        void retiraVerticeV(const char &);
+        bool listaVazia() const;
     private:
         vector<VerticeCaminho*> vertices;
         static int pai(int);
