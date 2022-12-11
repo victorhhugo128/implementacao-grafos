@@ -6,6 +6,9 @@
 #include "busca_em_profundidade.cpp"
 #include "componenentes_fortemente_conectados.cpp"
 #include "busca_em_largura.cpp"
+#include "prim.cpp"
+#include "heap_min_vertices.cpp"
+#include "dijkstra.cpp"
 
 using std::cout;
 using std::end;
@@ -179,7 +182,7 @@ int main(){
     grafo_conectado->inserirAresta('H', 'H');
     grafo_conectado->mostrarMatriz(); */
 
-    Grafo *grafo_conectado = new Grafo(8, true);
+    /* Grafo *grafo_conectado = new Grafo(8, true);
 
     grafo_conectado->inserirAresta('A', 'B');
     grafo_conectado->inserirAresta('B', 'C');
@@ -212,9 +215,49 @@ int main(){
 
     busca_largura->buscaEmLargura('A');
 
-    busca_largura->mostraTempoDescoberta();
+    busca_largura->mostraTempoDescoberta(); */
 
+    /* Grafo *prim_teste = new Grafo(6, false);
 
+    prim_teste->inserirAresta('A', 'B', 6);
+    prim_teste->inserirAresta('A', 'C', 1);
+    prim_teste->inserirAresta('A', 'D', 5);
+    prim_teste->inserirAresta('B', 'C', 2);
+    prim_teste->inserirAresta('B', 'E', 5);
+    prim_teste->inserirAresta('C', 'D', 2);
+    prim_teste->inserirAresta('C', 'E', 6);
+    prim_teste->inserirAresta('C', 'F', 4);
+    prim_teste->inserirAresta('D', 'F', 4);
+    prim_teste->inserirAresta('E', 'F', 3);
+
+    prim_teste->mostrarMatriz();
+
+    Prim *prim = new Prim(*prim_teste);
+
+    prim->algPrim('A');
+    prim->mostraResultados(); */
+
+    Grafo *dijkstra_teste = new Grafo(9, false);
+
+    dijkstra_teste->inserirAresta('A', 'B', 4);
+    dijkstra_teste->inserirAresta('A', 'H', 8);
+    dijkstra_teste->inserirAresta('B', 'C', 8);
+    dijkstra_teste->inserirAresta('B', 'H', 11);
+    dijkstra_teste->inserirAresta('C', 'D', 7);
+    dijkstra_teste->inserirAresta('C', 'I', 2);
+    dijkstra_teste->inserirAresta('C', 'F', 4);
+    dijkstra_teste->inserirAresta('D', 'E', 9);
+    dijkstra_teste->inserirAresta('D', 'F', 14);
+    dijkstra_teste->inserirAresta('H', 'G', 1);
+    dijkstra_teste->inserirAresta('H', 'I', 7);
+    dijkstra_teste->inserirAresta('G', 'I', 6);
+    dijkstra_teste->inserirAresta('G', 'F', 2);
+    dijkstra_teste->inserirAresta('F', 'E', 10);
+
+    Dijkstra *dijkstra = new Dijkstra(*dijkstra_teste);
+
+    dijkstra->algDijkstra('A');
+    dijkstra->mostraResultados();
 
    /*  ListaAdjacencia lista('A');
 
